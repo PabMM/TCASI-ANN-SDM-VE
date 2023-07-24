@@ -3,8 +3,9 @@
 
 clear;clc;close all;
 tStart = cputime;
+classifier_model = '';
 
-data_path = [cd,'\VAL-DS\Multiple-Iterations-C\classifier_2orGmSDM_val_'];
+data_path = [cd,'\VAL-DS\Multiple-Iterations-SC\SCANN',classifier_model,'_2orGmSDM_val_'];
 % Load model
 SDMmodel = 'GmC2ndCTSDMParam';
 load_system(SDMmodel);
@@ -89,7 +90,7 @@ for i = 1:num_iterations
 end
 %%
 
-save(['VAL-DS/sim_2orGM_SingleClass_',num2str(num_iterations),'.mat'],"SNR_asked","SNR_sim","power_sim","power_asked","fom_sim","fom_asked")
+save(['VAL-DS/sim_2orGM_SingleClass',classifier_model,'_',num2str(num_iterations),'.mat'],"SNR_asked","SNR_sim","power_sim","power_asked","fom_sim","fom_asked")
 %%
 
 function SNR = try_snr(obj,bandwith,N,fs,fin)

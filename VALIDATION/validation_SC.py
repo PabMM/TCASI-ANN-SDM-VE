@@ -11,7 +11,7 @@ import joblib
 from tqdm import tqdm
 
 # load dataset
-model_name = '2orSCSDM'
+model_name = '3orCascadeSDM'
 file_name = 'DATA-SETS/data_'+model_name+'.csv'
 
 df = read_csv(file_name)

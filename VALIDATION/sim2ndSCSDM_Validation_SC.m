@@ -3,9 +3,9 @@
 
 clear;clc;close all;
 tStart = cputime;
-
-data_path = [cd,'\VAL-DS\Multiple-Iterations-SC\SCANN_2orSCSDM_val_']; % Single Class
-% data_path = [cd,'\VAL-DS\Multiple-Iterations-C\Classifier_2orSCSDM_val_']; % Classifier
+classifier_model = 'GB';
+% data_path = [cd,'\VAL-DS\Multiple-Iterations-SC\SCANN_2orSCSDM_val_']; % Single Class
+data_path = [cd,'\VAL-DS\Multiple-Iterations-C\Classifier',classifier_model,'_2orSCSDM_val_']; % Classifier
 % Load model
 SDMmodel = 'SecondOrderSingleBitSC';
 load_system(SDMmodel);
@@ -72,7 +72,7 @@ for i = 1:num_iterations
 end
 fom_sim = SNR_sim+10*log10(Bw./power_sim);
 %%
-save(['VAL-DS/sim_2orSC_SingleClass_',num2str(num_iterations),'.mat'],"SNR_asked","SNR_sim","power_sim","power_asked","fom_sim","fom_asked")
+save(['VAL-DS/sim_2orSC_SingleClassGB_',num2str(num_iterations),'.mat'],"SNR_asked","SNR_sim","power_sim","power_asked","fom_sim","fom_asked")
 
 function SCANN3orCascadeSDMval29 = importfile_SC(filename, dataLines)
 
