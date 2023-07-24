@@ -1,0 +1,15 @@
+Modelos Regression-Only
+
+singleclass_ann.py: Entrena una red sencilla para los diferentes modelos. Se puede considerar anticuada
+
+singleclass_ann_NSA.py: Archivo basado en el anterior pero que incluye el tuning de las redes dentro 
+del espacio de hiperparamtros que hemos considearado.
+
+models: Carpeta que contiene los modelos en sí de Regression-Only. Actualmente contiene los modelos obtenidos
+tras el tuning. También contine diagramas de los modelos.
+
+scalers: Scaler minmax de la variables de diseño de los diferentes moduladores.
+
+NSA: Contiene los trials del tuning
+
+tb_logs: de los mejores modelos durante el re-entreno

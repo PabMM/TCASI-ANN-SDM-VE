@@ -1,0 +1,10 @@
+- many_classifier.py: Archivo original de Gustavo donde se comparan diferentes clasificadores,
+se calculan las diferentes matrices de confusion y se guardan.
+
+- train_classifier.py: Antiguo script donde entrenaba a una red para hacer de clasificador. Ya se puede
+considerar anticuado.
+
+- displays.txt: displays por el terminal que se generan al ejecutar many_classifier
+
+- Confusion_Matrices: Carpeta que contienes las matrices de confusion. Aparecen bajo el nombre de:
+"Confusion_Matrix_MODELO_{Test o Total}"

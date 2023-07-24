@@ -1,0 +1,19 @@
+validation_SC.py: genera los archivos de validación que contienen las variables de diseño predichas por las redes 
+regression-only además de las especificaciones pedidas (specs_asked).
+Guarda dicho archivos en VALIDATION\VAL-DS\Multiple-Iterations-SC
+
+validacion_C.py: igual que el anterior pero para el clasificador. Carga el clasificador que queramos y predice
+el modelo a utizar. Carga dicho modelo y luego llama a una función que es una copia del script anterior. Con esto se generan
+n_interaciones*n_modelos archivos que se guardan en VALIDATION\VAL-DS\Multiple-Iterations-C
+
+Archivos sim_modelo_Validation_SC.m leen los archivos generados por los scripts anteriores. Corren las simulaciones
+correspondientes y se obtienen las especificaciones reales. Por últimos guradan en VAL-DS archivos . mat 
+que contienen las especificaiones pedidas y las reales para su posterior procesado
+
+stats_SC_V2.m lee los archivos .mat mencionados anteriormente y calcula diferentes estadísticas. Genera los histogramas
+y los guarda en la carpeta Images
+
+Images: Carpeta con las imagenes de las distribuciones del parametro E:
+Estan llamadas:
+
+"E_modulador_{classifier_GradientBoost,SingleClass}_Spec_num_iteraciones.pdf" En total: 3*2*3 = 18 imagenes

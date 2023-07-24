@@ -1,0 +1,8 @@
+En el archivo look_up_table.py se implementa la look-up table además de: 
+
+-Calcular la distribucion de Epara FOM SNR y POWER, guardar los correspondientes
+histogramas en Lookuptable_SPEC_.pdf
+
+-Compara E_FOM con la de la ANN que se carga leyendo el archivo err_fom_SC_2orSC_.csv que conincide con la variable
+guardada en VALIDATION\VAL-DS\sim_2orSC_SingleClass_10.mat
+
