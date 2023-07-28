@@ -8,7 +8,8 @@ ds_name = 'classifier'
 
 model_names = [ '2orSCSDM',
                 '211CascadeSDM',
-                '3orCascadeSDM']
+                '3orCascadeSDM',
+                '2orGMSDM']
 
 data_path = 'DATA-SETS/data_'
 

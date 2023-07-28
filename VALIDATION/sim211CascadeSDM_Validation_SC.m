@@ -89,7 +89,7 @@ for i = 1:num_iterations
     disp(cputime - tStart2)
     fprintf('Saving Data ...')
     
-    SNR_sim(:,i) = reshape(arrayfun(@(obj) obj.SNRArray, SDout),[],1);
+    SNR_sim(:,i) = reshape(arrayfun(@(obj) obj.SNRArray1, SDout),[],1);
     power_sim(:,i) = Io1+Io2+Io3+Io4;
     
 end
