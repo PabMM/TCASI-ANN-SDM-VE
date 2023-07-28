@@ -7,9 +7,10 @@ from sklearn.preprocessing import MinMaxScaler
 from joblib import dump
 from tensorflow import keras
 import keras_tuner
-
+import timeit
+import numpy as np
 # load dataset
-model_name = '3orCascadeSDM'
+model_name = '211CascadeSDM'
 file_name = 'DATA-SETS/data_'+model_name+'.csv'
 df = read_csv(file_name)
 
@@ -84,7 +85,7 @@ tuner = keras_tuner.GridSearch(
     objective="val_loss",
     max_trials=130,
     executions_per_trial=2,
-    overwrite=True,
+    overwrite=False,
     directory="SINGLECLASS-ANN",
     project_name='NSA/'+model_name,
 )
@@ -95,17 +96,21 @@ tuner.search(x_train, y_train,
 tuner.results_summary()
 
 # Query the results 
-models = tuner.get_best_models(num_models=2)
-model = models[0]
+models = tuner.get_best_models(num_models=30)
+model = models[15]
+
 
 
 # Re-Train the model
 callbacks = [keras.callbacks.TensorBoard('SINGLECLASS-ANN/tb_logs/'+model_name),early_stop]
 
+tstart = timeit.default_timer()
 model.fit(x_train, y_train, 
              validation_data=(x_val,y_val),epochs=2000, batch_size=256,callbacks = callbacks,verbose=1)
 
-
+tend = timeit.default_timer()
+ETA = tend - tstart
+print(f'{model_name} re-training time: {ETA:.2f}s')
 model.save('SINGLECLASS-ANN/models/'+model_name,overwrite= True)
 
 # print model
@@ -118,8 +123,11 @@ keras.utils.plot_model(model, to_file='SINGLECLASS-ANN/models/'+model_name+'.png
 
 # make predictions on test set
 # eval_results
+tstart = timeit.default_timer()
 eval_results = model.evaluate(x_test,y_test,verbose=0)
-
+tend = timeit.default_timer()
+ETA = tend-tstart
+print(f'Inference time: {ETA:.8f}s. Per iteration: {ETA/np.size(x_test):.8f}s')
 print('MSE test set: %.3f' % eval_results[1])
 
 

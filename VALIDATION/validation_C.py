@@ -45,17 +45,15 @@ def validation_SC(df_val,model_name,classifier_model = ''):
     num_iterations = 10
     print('Making predictions...')
 
-    specs_var = np.zeros_like(specs)
-    specs_var[:,1] = specs[:,1]
+    y_reg_predict = model.predict(specs,verbose=0)
+    y_reg_predict = y_scaler.inverse_transform(y_reg_predict)
+    
     for i in tqdm(range(num_iterations)):
-        range_val = 0.10
+        range_val = 0.05
         if i==0:
             range_val=0
-        specs_var[:,0] =  random_factor_vec(specs[:,0],range_val=range_val)  
-        specs_var[:,2] =  random_factor_vec(specs[:,2],range_val=range_val)  
-        
-        y_reg_predict = model.predict(specs,verbose=0)
-        y_reg_predict = y_scaler.inverse_transform(y_reg_predict)
+         
+        y_reg_predict = random_factor_vec(y_reg_predict,range_val=range_val)
         y_reg_predict = pd.DataFrame(y_reg_predict,columns=dv_name)
 
         specs_val = df_val[['SNR', 'OSR', 'Power']]
@@ -67,7 +65,7 @@ def validation_SC(df_val,model_name,classifier_model = ''):
 classifier_name = 'classifier'
 file_name = 'DATA-SETS/data_'+classifier_name
 
-df_val = read_csv(file_name+'_val.csv')
+df_val = read_csv(file_name+'_cross_val.csv')
 
 # encoder
 encoder = LabelEncoder()

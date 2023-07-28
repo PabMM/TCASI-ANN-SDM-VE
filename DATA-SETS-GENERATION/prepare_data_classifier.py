@@ -7,7 +7,7 @@ ds_name = 'classifier'
 # ds_name insted
 
 model_names = [ '2orSCSDM',
-                '2orGmSDM',
+                '211CascadeSDM',
                 '3orCascadeSDM']
 
 data_path = 'DATA-SETS/data_'
@@ -35,12 +35,14 @@ selected_dataframes = [df.sample(n=min_length, random_state=1) for df in data_fr
 train_dataframes = []
 validation_dataframes = []
 total_dataframes = []
+cross_validation_dataframes =[]
 
 for selected_df in selected_dataframes:
     train_df, validation_df = train_test_split(selected_df, test_size=0.2, random_state=1)
     train_dataframes.append(train_df)
     validation_dataframes.append(validation_df)
     total_dataframes.append(selected_df)
+    cross_validation_dataframes.append(validation_df.sample(n=1000,random_state=1))
 
 
 
@@ -48,11 +50,13 @@ for selected_df in selected_dataframes:
 df_train = pd.concat(train_dataframes, ignore_index=True)
 df_val = pd.concat(validation_dataframes, ignore_index=True)
 df_total = pd.concat(total_dataframes,ignore_index=True)
+df_cross_val = pd.concat(cross_validation_dataframes,ignore_index=True)
 # Save files
 
 df_train.to_csv(data_path+ds_name+'_train.csv', index=False)
 df_val.to_csv(data_path+ds_name+'_val.csv', index=False)
 df_total.to_csv(data_path+ds_name+'_total.csv', index=False)
+df_cross_val.to_csv(data_path+ds_name+'_cross_val.csv', index=False)
 
 def test_same_representatives(dataframes, merged_df):
     # Obtener la lista única de valores de la columna 'category' de los DataFrames originales
@@ -68,3 +72,4 @@ def test_same_representatives(dataframes, merged_df):
 test_same_representatives(data_frames, df_train)
 test_same_representatives(data_frames, df_val)
 test_same_representatives(data_frames, df_total)
+test_same_representatives(data_frames, df_cross_val)

@@ -1,8 +1,8 @@
 %% Import data
 clear;clc
-file_name = 'sim_2orGM_SingleClass_10';
-model_name = '2orGM_SingleClass';
-num_iterations = 10;
+file_name = 'sim_2orSC_SingleClassGB_10';
+model_name = '2orSC_classifier_GradientBoost';
+num_iterations = 1;
 load(['VAL-DS/',file_name,'.mat'])
 
 
@@ -51,7 +51,7 @@ alpha = 0.05;
 Q = quantile(err,alpha);
 
 fprintf([model_name,': ',name])
-fprintf(':Mode = %.2f, Mean %.2f, std %.2f, P = %.2f, Q(%.2f) = %.2f\n',moda,m,s,P,alpha,Q)
+fprintf(':Mean %.2f, std %.2f, P = %.2f, Q(%.2f) = %.2f\n',m,s,P,alpha,Q)
    
 
 

@@ -12,6 +12,7 @@ import sys
 sys.path.append('Lib')
 from Lib import calculate_confusion_matrix
 from Lib import save_model
+import timeit
 
 #%%datareading and normalizatino
 csv_file="DATA-SETS/data_classifier_total.csv"
@@ -86,8 +87,29 @@ y=pd.concat((y_train,y_test),axis=0,ignore_index=True)
 from sklearn.preprocessing import LabelEncoder
 le = LabelEncoder()
 le.fit_transform(dataframe["target"].values)
+np.save('CLASSIFIER/model/classifier_classes.npy', le.classes_,allow_pickle=True)
 
 CCM = calculate_confusion_matrix(le.classes_)
+
+# Def function for calculating accuracy and displays
+
+def model_eval(model,x,y_true,model_name,key):
+  # evaluate model
+  tstart = timeit.default_timer()
+  y_predict = model.predict(x)
+  tend = timeit.default_timer()
+  ETA = tend - tstart
+  # accuracy
+  scores = accuracy_score(y_true,y_predict)
+  # disp
+  n = np.size(y_true)
+  tn = ETA/n
+  print(f'{model_name} accuracy on the {key} dataset : {np.mean(scores):.3f} prediction time {ETA:.8f}s, prediction time per point {tn:.8f}s')
+  # confusion Matrix
+  CCM.plot_confusion_matrix(y_true,y_predict,model_name,key)
+
+
+
 
 #%%# First the GNB model
 from sklearn.naive_bayes import GaussianNB
@@ -97,20 +119,12 @@ tstart=time.time()
 GNBmodel.fit(x_train, y_train)
 tend=time.time()
 ETA=tend-tstart
+print(f'GNB fitting time {ETA:.3f}s')
 #Evaluate model
-predictions_Test_GNB=GNBmodel.predict(x_test)
-predictions_GNB=GNBmodel.predict(x)
-
-#evaluate model
-scores_GNB = accuracy_score(y, predictions_GNB)
-scores_Test_GNB= accuracy_score(y_test, predictions_Test_GNB)
-print(f'GNB accuracy on the test dataset : {np.mean(scores_Test_GNB):.3f} fitting time {ETA:.3f}s')  
-print(f'GNB accuracy on the whole dataset: {np.mean(scores_GNB):.3f} fitting time {ETA:.3f}s') 
+model_eval(GNBmodel,x_train,y_train,'GNB','Train')
+model_eval(GNBmodel,x_test,y_test,'GNB','Test')
+model_eval(GNBmodel,x,y,'GNB','Whole')
 print_bar()
-
-# confusion matrix
-CCM.plot_confusion_matrix(y_test,predictions_Test_GNB,'GNB','Test')
-CCM.plot_confusion_matrix(y,predictions_GNB,'GNB','total')
 
 # save model
 save_model(GNBmodel,'GNB','CLASSIFIER/model/')
@@ -124,20 +138,12 @@ tstart=time.time()
 classifier_logreg.fit(x_train, y_train)
 tend=time.time()
 ETA=tend-tstart
+print(f'logreg fitting time {ETA:.3f}s')
 #Evaluate model
-predictions_Test_logreg=classifier_logreg.predict(x_test)
-predictions_logreg=classifier_logreg.predict(x)
-
-#evaluate model
-scores_logreg = accuracy_score(y, predictions_logreg)
-scores_Test_logreg= accuracy_score(y_test, predictions_Test_logreg)
-print(f'{classifier_name} accuracy on the test dataset : {np.mean(scores_Test_logreg):.3f} fitting time {ETA:.3f}s')  
-print(f'{classifier_name} accuracy on the whole dataset: {np.mean(scores_logreg):.3f} fitting time {ETA:.3f}s')  
+model_eval(classifier_logreg,x_train,y_train,'logreg','Train')
+model_eval(classifier_logreg,x_test,y_test,'logreg','Test')
+model_eval(classifier_logreg,x,y,'logreg','Whole')
 print_bar()
-
-# confusion matrix
-CCM.plot_confusion_matrix(y_test,predictions_Test_logreg,'LogReg','Test')
-CCM.plot_confusion_matrix(y,predictions_logreg,'LogReg','total')
 
 # save model
 save_model(classifier_logreg,'logreg','CLASSIFIER/model/')
@@ -150,20 +156,12 @@ tstart=time.time()
 classifier_MNB.fit(x_train, y_train)
 tend=time.time()
 ETA=tend-tstart
+print(f'MNB fitting time {ETA:.3f}s')
 #Evaluate model
-predictions_Test_MNB=classifier_MNB.predict(x_test)
-predictions_MNB=classifier_MNB.predict(x)
-
-#evaluate model
-scores_MNB = accuracy_score(y, predictions_MNB)
-scores_Test_MNB= accuracy_score(y_test, predictions_Test_MNB)
-print(f'MNB accuracy on the test dataset : {np.mean(scores_Test_MNB):.3f} fitting time {ETA:.3f}s')  
-print(f'MNB accuracy on the whole dataset: {np.mean(scores_MNB):.3f} fitting time {ETA:.3f}s')  
+model_eval(classifier_MNB,x_train,y_train,'MNB','Train')
+model_eval(classifier_MNB,x_test,y_test,'MNB','Test')
+model_eval(classifier_MNB,x,y,'MNB','Whole')
 print_bar()
-
-# confusion matrix
-CCM.plot_confusion_matrix(y_test,predictions_Test_MNB,'MultinomialNB','Test')
-CCM.plot_confusion_matrix(y,predictions_MNB,'MultinomialNB','total')
 
 # save model
 save_model(classifier_MNB,'MNB','CLASSIFIER/model/')
@@ -177,20 +175,12 @@ tstart=time.time()
 classifier_QDA.fit(x_train, y_train)
 tend=time.time()
 ETA=tend-tstart
+print(f'QDA fitting time {ETA:.3f}s')
 #Evaluate model
-predictions_Test_QDA=classifier_QDA.predict(x_test)
-predictions_QDA=classifier_QDA.predict(x)
-
-#evaluate model
-scores_QDA = accuracy_score(y, predictions_QDA)
-scores_Test_QDA= accuracy_score(y_test, predictions_Test_QDA)
-print(f'{classifier_name} accuracy on the test dataset : {np.mean(scores_Test_QDA):.3f} fitting time {ETA:.3f}s')  
-print(f'{classifier_name} accuracy on the whole dataset: {np.mean(scores_QDA):.3f} fitting time {ETA:.3f}s')  
+model_eval(classifier_QDA,x_train,y_train,'QDA','Train')
+model_eval(classifier_QDA,x_test,y_test,'QDA','Test')
+model_eval(classifier_QDA,x,y,'QDA','Whole')
 print_bar()
-
-# confusion matrix
-CCM.plot_confusion_matrix(y_test,predictions_Test_QDA,'QDA','Test')
-CCM.plot_confusion_matrix(y,predictions_QDA,'QDA','total')
 
 # save model
 save_model(classifier_QDA,'QDA','CLASSIFIER/model/')
@@ -204,20 +194,12 @@ tstart=time.time()
 classifier_RF.fit(x_train, y_train)
 tend=time.time()
 ETA=tend-tstart
+print(f'RF fitting time {ETA:.3f}s')
 #Evaluate model
-predictions_Test_RF=classifier_RF.predict(x_test)
-predictions_RF=classifier_RF.predict(x)
-
-#evaluate model
-scores_RF = accuracy_score(y, predictions_RF)
-scores_Test_RF= accuracy_score(y_test, predictions_Test_RF)
-print(f'{classifier_name} accuracy on the test dataset : {np.mean(scores_Test_RF):.3f} fitting time {ETA:.3f}s')  
-print(f'{classifier_name} accuracy on the whole dataset: {np.mean(scores_RF):.3f} fitting time {ETA:.3f}s')  
+model_eval(classifier_RF,x_train,y_train,'RF','Train')
+model_eval(classifier_RF,x_test,y_test,'RF','Test')
+model_eval(classifier_RF,x,y,'RF','Whole')
 print_bar()
-
-# confusion matrix
-CCM.plot_confusion_matrix(y_test,predictions_Test_RF,'RF','Test')
-CCM.plot_confusion_matrix(y,predictions_RF,'RF','total')
 
 # save model
 save_model(classifier_RF,'RF','CLASSIFIER/model/')
@@ -230,20 +212,12 @@ tstart=time.time()
 LDAmodel.fit(x_train, y_train)
 tend=time.time()
 LDATime=tend-tstart
+print(f'LDA fitting time {LDATime:.3f}s')
 #Evaluate model
-predictionsLDA_test=LDAmodel.predict(x_test)
-predictionsLDA=LDAmodel.predict(x)
-
-#evaluate model
-scoresLDA_test = accuracy_score(y_test, predictionsLDA_test)
-scoresLDA = accuracy_score(y, predictionsLDA)
-print(f'LDA accuracy on the test data: {np.mean(scoresLDA_test):.3f} execution time {LDATime:.3f}s')   
-print(f'LDA accuracy on the whole data: {np.mean(scoresLDA):.3f} execution time {LDATime:.3f}s')   
+model_eval(LDAmodel,x_train,y_train,'LDA','Train')
+model_eval(LDAmodel,x_test,y_test,'LDA','Test')
+model_eval(LDAmodel,x,y,'LDA','Whole')
 print_bar()
-
-# confusion matrix
-CCM.plot_confusion_matrix(y_test,predictionsLDA_test,'LDA','Test')
-CCM.plot_confusion_matrix(y,predictionsLDA,'LDA','total')
 
 # save model
 save_model(LDAmodel,'LDA','CLASSIFIER/model/')
@@ -256,20 +230,13 @@ tstart=time.time()
 
 DTmodel.fit(x_train,y_train)
 tend=time.time()
-DTTime=tend-tstart
-
-predictionsDT_test=DTmodel.predict(x_test)
-predictionsDT=DTmodel.predict(x)
-
-scoresDT_test = accuracy_score(y_test, predictionsDT_test)
-scoresDT = accuracy_score(y, predictionsDT)
-print(f'Decission Tree accuracy on the test data: {np.mean(scoresDT_test):.3f} execution time {DTTime:.3f}s')   
-print(f'Decission Tree accuracy on the whole data: {np.mean(scoresDT):.3f} execution time {DTTime:.3f}s')   
+ETA = tend-tstart
+print(f'DT fitting time {ETA:.3f}s')
+#Evaluate model
+model_eval(DTmodel,x_train,y_train,'DT','Train')
+model_eval(DTmodel,x_test,y_test,'DT','Test')
+model_eval(DTmodel,x,y,'DT','Whole')
 print_bar()
-
-# confusion matrix
-CCM.plot_confusion_matrix(y_test,predictionsDT_test,'DT','Test')
-CCM.plot_confusion_matrix(y,predictionsDT,'DT','total')
 
 # save model
 save_model(DTmodel,'DT','CLASSIFIER/model/')
@@ -287,15 +254,12 @@ for kernel in ("linear", "poly", "rbf"):
   tend=time.time()
   ThisTime=tend-tstart
   SVM_time.append(ThisTime)
-  predictionsSVM_test=SVMModel.predict(x_test)
-  predictionsSVM=SVMModel.predict(x)
-  scoresSVM_test = accuracy_score(y_test, predictionsSVM_test)
-  scoresSVM = accuracy_score(y, predictionsSVM)
-  print(f'SVM {kernel} Kernel accuracy on the test data: {np.mean(scoresSVM_test):.3f} execution time {ThisTime:.3f}s')   
-  print(f'SVM {kernel} Kernel accuracy on the whole data: {np.mean(scoresSVM):.3f} execution time {ThisTime:.3f}s')
-  # confusion matrix
-  CCM.plot_confusion_matrix(y_test,predictionsSVM_test,'SVM_'+kernel,'Test')
-  CCM.plot_confusion_matrix(y,predictionsSVM,'SVM_'+kernel,'total')
+  print(f'SVM fitting time {ThisTime:.3f}s')
+  #Evaluate model
+  model_eval(SVMModel,x_train,y_train,'SVM'+kernel,'Train')
+  model_eval(SVMModel,x_test,y_test,'SVM'+kernel,'Test')
+  model_eval(SVMModel,x,y,'SVM'+kernel,'Whole')
+  print_bar()
 
   # save model
   save_model(SVMModel,'SVM_'+kernel,'CLASSIFIER/model/')   
@@ -331,19 +295,12 @@ if(input("Adjust learning rate in Gradient Boosting Classifier or use default va
   BestAccuracyGB=GB_accuracy[BestPerformingGB]
   BestGBTime=GB_time[BestPerformingGB]
   BestModelGB = GB_model[BestPerformingGB]
-  # Evaluate best model for metrics and displays
-  predictionsGB_test=GBModel.predict(x_test)
-  predictionsGB=GBModel.predict(x)
-  scoresGB_test = np.mean(accuracy_score(y_test, predictionsGB_test))
-  scoresGB = np.mean(accuracy_score(y, predictionsGB))
-
-  print(f'Best performing Gradient Boosting Classifier on test data: {BestAccuracyGB:.3f} using LR={BestLearningRateGB:.2f} execution time {BestGBTime:.3f}s')   
-  print(f'Best performing Gradient Boosting Classifier on whole data: {scoresGB:.3f} using LR={BestLearningRateGB:.2f} execution time {BestGBTime:.3f}s')   
+  print(f'GB fitting time {BestGBTime:.3f}s')
+  #Evaluate model
+  model_eval(BestModelGB,x_train,y_train,'GB','Train')
+  model_eval(BestModelGB,x_test,y_test,'GB','Test')
+  model_eval(BestModelGB,x,y,'GB','Whole')
   print_bar()
-
-  # confusion matrix
-  CCM.plot_confusion_matrix(y_test,predictionsGB_test,'GB','Test')
-  CCM.plot_confusion_matrix(y,predictionsGB,'GB','total')
 
   # save model
   save_model(BestModelGB,'GB','CLASSIFIER/model/')

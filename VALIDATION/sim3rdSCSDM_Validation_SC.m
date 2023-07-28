@@ -5,13 +5,13 @@ clear;clc;close all;
 tStart = cputime;
 
 Bw = 1e4;
-data_path = [cd,'\VAL-DS\Multiple-Iterations-SC\SCANN_3orCascadeSDM_val_'];
+data_path = [cd,'\VAL-DS\Multiple-Iterations-C\classifierGB_3orCascadeSDM_val_'];
 % Load model
 SDMmodel = 'ThirdOrderCascadeSingleBitSC';
 load_system(SDMmodel);
 variables_filePath = '3rdSCSDM_Variables.mat';
 % number of rows
-table = importfile([data_path,num2str(1),'.csv']);
+table = importfile_SC([data_path,num2str(1),'.csv']);
 
 [rows,~]=size(table);
 
@@ -74,7 +74,7 @@ end
 %%
 fom_sim = SNR_sim+10*log10(Bw./power_sim);
 %%
-save(['VAL-DS/sim_3orSC_SingleClass_',num2str(num_iterations),'.mat'],"SNR_asked","SNR_sim","power_sim","power_asked","fom_sim","fom_asked")
+save(['VAL-DS/sim_3orSC_SingleClassGB_',num2str(num_iterations),'.mat'],"SNR_asked","SNR_sim","power_sim","power_asked","fom_sim","fom_asked")
 
 
 function SCANN3orCascadeSDMval29 = importfile_SC(filename, dataLines)
