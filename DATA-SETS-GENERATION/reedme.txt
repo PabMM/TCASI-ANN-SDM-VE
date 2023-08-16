@@ -1,7 +1,0 @@
--prepare_data_classifier.py: Archivo que dado los moduladores que se van a considerar para el clasificador
-lee los correspondientes data set: data_MODELO.csv de la carpeta DATA-SETS, y genera un nuevo data set con
-el formato apropiado para la clasificacion, consiste en: Columnas de especificaciones y etiquta del modelo.
-
--sim2ndSCSDM_Parallel_Random.m: archivo Matlab que genera el data set de segundo orden de tiempo discreto
-
--sim2ndGMSDM_Parallel_Random.m: archivo Matlab que genera el data set de segundo orden de tiempo continuo

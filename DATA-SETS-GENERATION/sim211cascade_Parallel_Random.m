@@ -3,7 +3,6 @@
 
 clear;clc;close all;
 tStart = cputime;
-
 Bw=4e6;
 fin=Bw/3;
 
@@ -13,8 +12,8 @@ load_system(SDMmodel);
 
 % Parameters' values
 n_sim = 5e4;
-OSR=[ 128 256 512];
-OSR = OSR(randi([1, 3], 1, n_sim));
+OSR=[32 64 128 256 512];
+OSR = OSR(randi([1, 5], 1, n_sim));
 Adc = 10.^(1+2*rand(1,n_sim));
 gm = 10.^(-5+2*rand(1,n_sim));
 io = 10.^(-4+2*rand(1,n_sim));
@@ -78,7 +77,7 @@ io3 = reshape(arrayfun(@(obj) obj.Variables(12).Value, SDin), [], 1);
 adc4 = reshape(arrayfun(@(obj) obj.Variables(13).Value, SDin), [], 1);
 gm4 = reshape(arrayfun(@(obj) obj.Variables(14).Value, SDin), [], 1);
 io4 = reshape(arrayfun(@(obj) obj.Variables(15).Value, SDin), [], 1);
-snr = reshape(arrayfun(@(obj) obj.SNRArray, SDout),[],1);
+snr = reshape(arrayfun(@(obj) obj.SNRArray1, SDout),[],1);
 power = io1+io2+io3+io4;
 data = [snr,osr,power,adc1,gm1,io1,adc2,gm2,io2,adc3,gm3,io3,adc4,gm4,io4];
 

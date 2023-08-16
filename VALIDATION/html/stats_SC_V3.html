@@ -1,0 +1,385 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>stats_SC_V3</title><meta name="generator" content="MATLAB 9.2"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2023-08-01"><meta name="DC.source" content="stats_SC_V3.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><pre class="codeoutput">---------------------------------
+2orSC, SingleClassGB, num_iterations = 1
+---------------------------------
+                  FOM          SNR         Power  
+               _________    _________    _________
+
+    Mean        0.005943    0.0041366    -0.058148
+    P(E&gt;0)       0.63305      0.62092      0.25677
+    p(0.05)    -0.097644     -0.20798     -0.40996
+    p(0.25)    -0.010177    -0.021193     -0.15223
+    p(0.50)     0.010035     0.016556    -0.050003
+    p(0.75)     0.033352     0.060129    0.0016628
+    p(0.95)     0.081357       0.1446      0.26113
+
+---------------------------------
+2orSC, SingleClassGB, num_iterations = 10
+---------------------------------
+                   FOM           SNR          Power  
+               ___________    __________    _________
+
+    Mean          0.018406      0.028602    -0.063187
+    P(E&gt;0)         0.74697       0.73856      0.27264
+    p(0.05)      -0.082557      -0.18029     -0.42107
+    p(0.25)    -0.00023683    -0.0025606      -0.1661
+    p(0.50)       0.019589      0.032998    -0.070038
+    p(0.75)       0.045885      0.083211    0.0071589
+    p(0.95)       0.096021        0.1788      0.27519
+
+---------------------------------
+2orGM, SingleClassGB, num_iterations = 1
+---------------------------------
+                  FOM          SNR        Power  
+               _________    _________    ________
+
+    Mean        0.021491     0.021954      1.6233
+    P(E&gt;0)         0.658        0.639       0.486
+    p(0.05)     -0.05723      -0.4661    -0.99716
+    p(0.25)    -0.014962    -0.029216    -0.81909
+    p(0.50)     0.021881     0.033468    -0.10173
+    p(0.75)      0.05026       0.0891      1.7297
+    p(0.95)      0.12019      0.23139      10.921
+
+---------------------------------
+2orGM, SingleClassGB, num_iterations = 10
+---------------------------------
+                  FOM          SNR        Power  
+               _________    _________    ________
+
+    Mean        0.026651     0.032652      1.5848
+    P(E&gt;0)         0.685        0.663       0.486
+    p(0.05)    -0.055012     -0.45822    -0.99694
+    p(0.25)    -0.010867    -0.023701    -0.81826
+    p(0.50)     0.026893     0.043228    -0.10298
+    p(0.75)     0.057818      0.10421      1.7065
+    p(0.95)      0.12525      0.25132      10.817
+
+---------------------------------
+3orSC, SingleClassGB, num_iterations = 1
+---------------------------------
+                  FOM           SNR         Power  
+               __________    __________    ________
+
+    Mean         0.063759       0.12085     0.12963
+    P(E&gt;0)        0.69791       0.72106     0.55568
+    p(0.05)      -0.18471      -0.29962    -0.55335
+    p(0.25)    -0.0037903    -0.0014385    -0.16945
+    p(0.50)      0.019593      0.016874    0.051275
+    p(0.75)       0.12288        0.1959     0.34988
+    p(0.95)       0.38808       0.73977      1.0436
+
+---------------------------------
+3orSC, SingleClassGB, num_iterations = 10
+---------------------------------
+                  FOM          SNR        Power  
+               _________    _________    ________
+
+    Mean        0.074111      0.13872     0.12244
+    P(E&gt;0)       0.78501      0.85667     0.54796
+    p(0.05)     -0.16558     -0.27658    -0.57688
+    p(0.25)    0.0020045    0.0069423    -0.17186
+    p(0.50)     0.027202      0.02655    0.046319
+    p(0.75)      0.13369      0.21458     0.33464
+    p(0.95)      0.40179      0.77249      1.0479
+
+---------------------------------
+211Cascade, SingleClassGB, num_iterations = 1
+---------------------------------
+                  FOM           SNR         Power  
+               __________    __________    ________
+
+    Mean        -0.077357      -0.15777    -0.34855
+    P(E&gt;0)        0.65362       0.57828     0.29648
+    p(0.05)      -0.59166       -1.0368    -0.87932
+    p(0.25)    -0.0027948    -0.0028867    -0.74376
+    p(0.50)     0.0088457    0.00011995    -0.35899
+    p(0.75)      0.032588     0.0081212    0.027292
+    p(0.95)      0.055843      0.047352     0.14476
+
+---------------------------------
+211Cascade, SingleClassGB, num_iterations = 10
+---------------------------------
+                  FOM            SNR          Power  
+               __________    ___________    _________
+
+    Mean        -0.062181       -0.13313     -0.36123
+    P(E&gt;0)        0.69961         0.6135      0.26027
+    p(0.05)      -0.58253         -1.033     -0.88344
+    p(0.25)    -0.0012706    -0.00050339     -0.74962
+    p(0.50)      0.010206     0.00021433     -0.36753
+    p(0.75)      0.034453      0.0095075    0.0090307
+    p(0.95)      0.057529       0.051833       0.1292
+
+---------------------------------
+2orSC, LUTGB, num_iterations = 1
+---------------------------------
+                  FOM           SNR          Power   
+               __________    __________    __________
+
+    Mean       0.00022406    0.00057536     0.0029897
+    P(E&gt;0)        0.51914       0.52474       0.75257
+    p(0.05)    -0.0093771     -0.018084     -0.020122
+    p(0.25)    -0.0025842    -0.0046442     1.153e-16
+    p(0.50)    4.5455e-05    9.9824e-05    6.7867e-15
+    p(0.75)     0.0030017      0.005689    5.8349e-14
+    p(0.95)      0.010594      0.019872       0.02057
+
+---------------------------------
+2orSC, LUTGB, num_iterations = 10
+---------------------------------
+                   FOM            SNR          Power   
+               ___________    ___________    __________
+
+    Mean          0.014114       0.028448    7.2493e-05
+    P(E&gt;0)         0.94678        0.94024       0.46218
+    p(0.05)    -0.00016307    -0.00062584     -0.048317
+    p(0.25)      0.0047504      0.0089185     -0.027884
+    p(0.50)      0.0093139         0.0173    -0.0029854
+    p(0.75)        0.01584       0.031177      0.021989
+    p(0.95)       0.045079       0.096025      0.048708
+
+---------------------------------
+2orGM, LUTGB, num_iterations = 1
+---------------------------------
+                  FOM          SNR        Power  
+               __________    ________    ________
+
+    Mean         0.031477    0.012906      1.3278
+    P(E&gt;0)          0.702       0.562       0.312
+    p(0.05)     -0.054214    -0.28317    -0.99257
+    p(0.25)    -0.0059721    -0.04507    -0.92467
+    p(0.50)      0.026845    0.016204    -0.65035
+    p(0.75)      0.064074    0.081907     0.72738
+    p(0.95)       0.13713     0.22312      13.236
+
+---------------------------------
+2orGM, LUTGB, num_iterations = 10
+---------------------------------
+                  FOM           SNR        Power  
+               __________    _________    ________
+
+    Mean         0.036758     0.024142      1.3199
+    P(E&gt;0)          0.729        0.598       0.305
+    p(0.05)     -0.051786     -0.27795    -0.99225
+    p(0.25)    -0.0028185    -0.040853    -0.92623
+    p(0.50)      0.031323     0.028972    -0.65098
+    p(0.75)       0.06948     0.094508      0.7048
+    p(0.95)       0.14605       0.2338      13.071
+
+---------------------------------
+3orSC, LUTGB, num_iterations = 1
+---------------------------------
+                  FOM          SNR          Power   
+               _________    __________    __________
+
+    Mean       -0.001003    -0.0044955    -0.0068048
+    P(E&gt;0)       0.50827       0.50386       0.59096
+    p(0.05)     -0.25291      -0.41648      -0.92602
+    p(0.25)    -0.070913      -0.11382      -0.46608
+    p(0.50)    0.0010513    0.00037538       0.20402
+    p(0.75)      0.08071      0.086841        0.4555
+    p(0.95)       0.2217       0.42112       0.51269
+
+---------------------------------
+3orSC, LUTGB, num_iterations = 10
+---------------------------------
+                  FOM          SNR         Power  
+               _________    _________    _________
+
+    Mean       0.0088469     0.012661    -0.011087
+    P(E&gt;0)       0.54796      0.61521      0.58545
+    p(0.05)     -0.23319     -0.37764     -0.92613
+    p(0.25)    -0.059597    -0.098327     -0.46533
+    p(0.50)    0.0087023    0.0080457      0.19194
+    p(0.75)     0.087793      0.10226      0.44419
+    p(0.95)      0.23484      0.44508      0.51993
+
+---------------------------------
+211Cascade, LUTGB, num_iterations = 1
+---------------------------------
+                   FOM            SNR           Power   
+               ___________    ___________    ___________
+
+    Mean       -4.4554e-05    -3.9884e-05      0.0014395
+    P(E&gt;0)         0.67613        0.48924        0.19569
+    p(0.05)     -0.0010817    -0.00096521       -0.01051
+    p(0.25)    -6.6893e-16    -2.5884e-15    -1.7541e-13
+    p(0.50)     1.2645e-15              0     -4.616e-14
+    p(0.75)      3.841e-15     2.4647e-15    -7.6535e-15
+    p(0.95)     0.00066489      0.0010031       0.019492
+
+---------------------------------
+211Cascade, LUTGB, num_iterations = 10
+---------------------------------
+                  FOM            SNR          Power   
+               __________    ___________    __________
+
+    Mean        0.0028162      0.0050109     -0.012073
+    P(E&gt;0)         0.9775         0.7955       0.20939
+    p(0.05)    0.00016259    -9.0475e-05     -0.036438
+    p(0.25)    0.00045187     1.3036e-07     -0.025113
+    p(0.50)    0.00075805     0.00068819     -0.016455
+    p(0.75)     0.0019861      0.0034579    -0.0028273
+    p(0.95)     0.0062158        0.01205      0.023571
+
+</pre><p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2017a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+clear;clc
+modulators = {'2orSC','2orGM','3orSC','211Cascade'};
+model_names = {'SingleClassGB','LUTGB'};
+num_iterations = [1,10];
+n_mod = 4;
+n_model = 2;
+
+
+for j=1:n_model
+    for i =1:n_mod
+        for iter = num_iterations
+        
+        Stats_calculator(modulators{i},model_names{j},iter)
+        
+        end
+        
+    end
+end
+
+function Stats_calculator(modulator_name,model_name,num_iterations)
+
+data_path = [cd,'\VAL-DS\sim_',modulator_name,'_',model_name,'_10.mat'];
+
+load(data_path)
+
+fom_sim = fom_sim(:,1:num_iterations);
+
+
+SNR_sim = SNR_sim(:,1:num_iterations);
+power_sim = power_sim(:,1:num_iterations);
+
+
+[fom_sim,J] = max(fom_sim,[],2);
+
+
+
+aux = fom_sim;
+auy = aux;
+ i = 1;
+for j =1:length(J)
+
+    aux(i,1) = SNR_sim(i,J(j));
+    auy(i,1) = power_sim(i,J(j));
+    i = i+1;
+end
+SNR_sim = aux; clear aux
+power_sim = auy; clear auy
+
+
+err_fom = (fom_sim-fom_asked)./fom_asked;
+err_SNR = (SNR_sim-SNR_asked)./SNR_asked;
+err_power = (power_sim-power_asked)./power_asked;
+
+
+T = zeros(7,3);
+T(:,1) = Stats(err_fom);
+T(:,2) = Stats(err_SNR);
+T(:,3) = Stats(err_power);
+T = array2table(T,'VariableNames',{'FOM','SNR','Power'},'RowName',{'Mean','P(E>0)','p(0.05)',...
+    'p(0.25)','p(0.50)','p(0.75)','p(0.95)'});
+printbar
+fprintf([modulator_name, ', ' , model_name, ', num_iterations = ',num2str(num_iterations),'\n'])
+printbar
+disp(T)
+
+end
+
+function c = Stats(err)
+
+m = mean(err);
+
+P = mean(err>-.0);
+
+
+alpha = [0.05,0.25,0.50,0.75,0.95];
+
+c = zeros(2+length(alpha),1);
+
+c(1) = m;
+c(2) = P;
+for i = 1:length(alpha)
+c(i+2) = quantile(err,alpha(i));
+end
+
+end
+
+function printbar
+fprintf('REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH-\n')
+end
+##### SOURCE END #####
+--></body></html>
