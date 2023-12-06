@@ -1,12 +1,12 @@
 # Common libraries
-numpy==1.21.2
-pandas==1.3.3
-scikit-learn==0.24.2
-matplotlib==3.4.3
-joblib==1.1.0
+numpy
+pandas
+scikit-learn
+matplotlib
+joblib
 
 # TensorFlow and Keras
-tensorflow==2.6.0
-keras-tuner==1.0.3
+tensorflow
+keras-tuner
 
 # Add more libraries as needed
