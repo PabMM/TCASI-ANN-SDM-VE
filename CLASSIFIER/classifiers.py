@@ -345,7 +345,7 @@ train_dataset = train_dataset.shuffle(len(X_train)).batch(batch_size)
 # Batch the test set
 test_dataset = test_dataset.batch(batch_size)
 
-# Create a simple model using the inputs and target (architecture is the result of keras NAS tuner)
+# Create a simple model using the inputs and target (architecture is the result of NAS)
 model = tf.keras.Sequential([
     tf.keras.layers.BatchNormalization(input_shape=(X.shape[1],)),
     tf.keras.layers.Dense(256, activation='relu'),
@@ -380,7 +380,7 @@ y_pred_binary_integer = np.argmax(y_pred_binary, axis=1)
 y_pred_binary_integer_test = np.argmax(y_pred_binary_test, axis=1)
 
 
-
+# Compute confusion matrices
 
 CCM.plot_confusion_matrix(Y_test_integer_test,y_pred_binary_integer_test,'ANN','Test')
 CCM.plot_confusion_matrix(Y_test_integer,y_pred_binary_integer,'ANN','Total')

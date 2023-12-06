@@ -3,9 +3,9 @@
 
 clear;clc;close all;
 tStart = cputime;
-classifier_model = 'GB';
+classifier_model = 'DT';
 % data_path = [cd,'\VAL-DS\Multiple-Iterations-SC\SCANN_2orSCSDM_val_']; % Single Class
-data_path = [cd,'\VAL-DS\Multiple-Iterations-OPT\Classifier',classifier_model,'_2orSCSDM_val_']; % Classifier
+data_path = [cd,'\VAL-DS\Multiple-Iterations-C\Classifier',classifier_model,'_2orSCSDM_val_']; % Classifier
 % Load model
 SDMmodel = 'SecondOrderSingleBitSC';
 load_system(SDMmodel);

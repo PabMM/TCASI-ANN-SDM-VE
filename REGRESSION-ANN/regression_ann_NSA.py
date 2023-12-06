@@ -9,6 +9,7 @@ from tensorflow import keras
 import keras_tuner
 import timeit
 import numpy as np
+
 # load dataset
 model_name = '211CascadeSDM'
 file_name = 'DATA-SETS/data_'+model_name+'.csv'
@@ -34,6 +35,19 @@ x_val, x_test, y_val, y_test = train_test_split(x_val, y_val, test_size=0.2, ran
 
 # Tune Model architecture
 def call_existing_code(units,num_layers,dropout,activation,optimizer):
+    """
+    Define and compile a neural network model with hyperparameters.
+
+    Args:
+    - units (int): Number of units in the dense layers.
+    - num_layers (int): Number of dense layers.
+    - dropout (bool): Whether to use dropout.
+    - activation (str): Activation function for dense layers.
+    - optimizer (str): Optimizer for compiling the model.
+
+    Returns:
+    - model: Compiled Keras model.
+    """
 
     input_vector = keras.layers.Input(shape=(num_inputs,))
     x = keras.layers.BatchNormalization(scale=True, center=True)(input_vector)
@@ -65,6 +79,15 @@ def call_existing_code(units,num_layers,dropout,activation,optimizer):
     return model
 
 def build_model(hp):
+    """
+    Build a hyperparameter-tuned model using Keras Tuner.
+
+    Args:
+    - hp (keras_tuner.HyperParameters): Hyperparameters for the model.
+
+    Returns:
+    - model: Keras model.
+    """
     units = hp.Int("units", min_value=32, max_value=64, step=4)
     num_layers = hp.Int("num_layers", 1, 6) 
     dropout = hp.Boolean("dropout")
@@ -97,7 +120,7 @@ tuner.results_summary()
 
 # Query the results 
 models = tuner.get_best_models(num_models=30)
-model = models[15]
+model = models[0]
 
 
 

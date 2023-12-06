@@ -4,14 +4,31 @@ import numpy as np
 from itertools import product
 import pickle
 
-import matplotlib.pyplot as plt
-
 class calculate_confusion_matrix:
     def __init__(self, classes, show=False):
+        """
+        Initializes the Confusion Matrix Calculator.
+
+        Args:
+        - classes (list): List of class labels.
+        - show (bool): Flag to control whether to display the confusion matrix plot.
+        """
         self.classes = classes
         self.show = show
 
     def plot_confusion_matrix(self, true_class, predict_class, model_name, name):
+        """
+        Plots a normalized confusion matrix and saves it as an EPS file.
+
+        Args:
+        - true_class (array-like): True class labels.
+        - predict_class (array-like): Predicted class labels.
+        - model_name (str): Name of the classification model.
+        - name (str): Name identifier for the confusion matrix.
+
+        Returns:
+        None
+        """
         # Plot confusion matrix
         classes = self.classes
         conf_matrix = confusion_matrix(true_class, predict_class)
@@ -42,6 +59,17 @@ class calculate_confusion_matrix:
             plt.pause(3)
         plt.close()
 
-def save_model(model,name,relative_path=''):
-    filename = relative_path+name+'_model.sav'
+def save_model(model, name, relative_path=''):
+    """
+    Saves a trained machine learning model to a file using pickle.
+
+    Args:
+    - model: The trained machine learning model.
+    - name (str): Name identifier for the saved model file.
+    - relative_path (str): Relative path where the model file will be saved.
+
+    Returns:
+    None
+    """
+    filename = relative_path + name + '_model.sav'
     pickle.dump(model, open(filename, 'wb'))
