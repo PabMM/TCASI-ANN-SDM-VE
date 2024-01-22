@@ -12,6 +12,11 @@ import pickle
 from sklearn.metrics.pairwise import manhattan_distances
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.model_selection import train_test_split
+import sys
+import pathlib
+MYPATH=pathlib.Path(__file__).parent.parent.absolute()
+sys.path.append(str(MYPATH))
+
 
 def look_up_table(df, look):
     """
@@ -62,7 +67,7 @@ def random_factor(value, range_val=0.05):
 # Vectorize the random_factor function
 random_factor_vec = np.vectorize(random_factor)
 
-def validation_SC(df_val, model_name, classifier_model=''):
+def validation_SC(df_val, model_name, classifier_model='',PATH='.'):
     """
     Perform validation using a classifier model and a look-up table approach.
 
@@ -78,7 +83,7 @@ def validation_SC(df_val, model_name, classifier_model=''):
     None
     """
     # Load dataset
-    file_name = 'DATA-SETS/data_' + model_name + '.csv'
+    file_name = os.path.join(PATH,'DATA-SETS/data_' + model_name + '.csv')
     df = read_csv(file_name)
     dv_name = df.columns.tolist()
     for name in ['SNR', 'OSR', 'Power']:
@@ -100,27 +105,29 @@ def validation_SC(df_val, model_name, classifier_model=''):
         specs_val = df_val[['SNR', 'OSR', 'Power']]
         df_predict = pd.concat([specs_val.reset_index(drop=True), y_predict_var.reset_index(drop=True)],
                               axis=1)
-        df_predict.to_csv(f'VALIDATION/VAL-DS/Multiple-Iterations-LUT/classifier{classifier_model}_{model_name}_val_{i + 1}.csv', index=False)
+        df_predict.to_csv(f'{PATH}/VALIDATION/VAL-DS/Multiple-Iterations-LUT/classifier{classifier_model}_{model_name}_val_{i + 1}.csv', index=False)
 
 # Validation data set
 classifier_name = 'classifier'
 file_name = 'DATA-SETS/data_' + classifier_name
+file_name=os.path.join(MYPATH,file_name)
 
 df_val = read_csv(file_name + '_cross_val.csv')
 
 # Encoder
 encoder = LabelEncoder()
-encoder.classes_ = np.load('CLASSIFIER/model/' + classifier_name + '_classes.npy', allow_pickle=True)
+encoder.classes_ = np.load(f'{MYPATH}/CLASSIFIER/model/' + classifier_name + '_classes.npy', allow_pickle=True)
 
 model = 'GB'  # '' for ANN
 
 print(f'Classifier Model {model}')
-classifier_scaler = joblib.load('CLASSIFIER/model/classifier_scaler.gz')
+classifier_scaler = joblib.load(f'{MYPATH}/CLASSIFIER/model/classifier_scaler.gz')
 X_val = df_val[['SNR', 'OSR', 'Power']]
 column_names = X_val.columns.to_list()
 scaled_values = pd.DataFrame(classifier_scaler.transform(X_val), columns=column_names)
 
-classifier = pickle.load(open(f'CLASSIFIER/model/{model}_model.sav', 'rb'))
+
+classifier = pickle.load(open(f'{MYPATH}/CLASSIFIER/model/{model}_model.sav', 'rb'))
 y_class_predict = classifier.predict(scaled_values)
 
 # Divide df_val into different sub-dfs by y_class_predict
@@ -129,4 +136,4 @@ dfs = [df_val[y_class_predict == model_name] for model_name in encoder.classes_]
 # Make predictions
 for df_val, model_name in zip(dfs, encoder.classes_):
     print(model_name)
-    validation_SC(df_val, model_name, classifier_model=model)
+    validation_SC(df_val, model_name, classifier_model=model,PATH=MYPATH)

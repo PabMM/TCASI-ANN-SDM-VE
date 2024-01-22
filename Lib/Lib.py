@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from itertools import product
 import pickle
+import os
 
 class calculate_confusion_matrix:
     def __init__(self, classes, show=False):
@@ -16,7 +17,7 @@ class calculate_confusion_matrix:
         self.classes = classes
         self.show = show
 
-    def plot_confusion_matrix(self, true_class, predict_class, model_name, name):
+    def plot_confusion_matrix(self, true_class, predict_class, model_name, name, PATH):
         """
         Plots a normalized confusion matrix and saves it as an EPS file.
 
@@ -53,7 +54,8 @@ class calculate_confusion_matrix:
         plt.xlabel('Predicted Label')
         plt.title(model_name)
         plt.tight_layout()
-        plt.savefig('CLASSIFIER/Confusion_Matrices/Confusion_Matrix_' + model_name + '_' + name + '.eps', format='eps')
+
+        plt.savefig(os.path.join(PATH,'CLASSIFIER/Confusion_Matrices/')+'Confusion_Matrix_' + model_name + '_' + name + '.eps', format='eps')
 
         if self.show:
             plt.pause(3)

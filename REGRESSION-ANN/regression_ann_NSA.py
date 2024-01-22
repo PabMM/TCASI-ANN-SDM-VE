@@ -10,9 +10,19 @@ import keras_tuner
 import timeit
 import numpy as np
 
+import os
+import pathlib
+import sys
+MYPATH=pathlib.Path(__file__).parent.parent.absolute()
+sys.path.append(str(MYPATH))
+
+
+
+#%% Dataset readout and train/val split
+
 # load dataset
 model_name = '211CascadeSDM'
-file_name = 'DATA-SETS/data_'+model_name+'.csv'
+file_name = os.path.join(MYPATH,'DATA-SETS/data_'+model_name+'.csv')
 df = read_csv(file_name)
 
 # split into input (x) and output (y) variables
@@ -32,7 +42,7 @@ dump(y_scaler,'REGRESSION-ANN/scalers/model_'+model_name+'_scaler.gz')
 x_train, x_val, y_train, y_val = train_test_split(specs_columns, y_scaled, test_size=0.2, random_state=1)
 x_val, x_test, y_val, y_test = train_test_split(x_val, y_val, test_size=0.2, random_state=1)
 
-
+#%%
 # Tune Model architecture
 def call_existing_code(units,num_layers,dropout,activation,optimizer):
     """
@@ -160,7 +170,7 @@ eval_results = model.evaluate(x_train,y_train,verbose=0)
 
 print('MSE train set: %.3f' % eval_results[1])
 
-
-
+print('_________________________________________________________________________________________________')
+print(f'Model trained and saved for the {model_name} SDM architecture')
 
 exit('__________________________________________________________________________________________________')
