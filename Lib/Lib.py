@@ -73,5 +73,7 @@ def save_model(model, name, relative_path=''):
     Returns:
     None
     """
-    filename = relative_path + name + '_model.sav'
+    os.makedirs(relative_path, exist_ok=True)
+
+    filename = os.path.join(relative_path + name + '_model.sav')
     pickle.dump(model, open(filename, 'wb'))

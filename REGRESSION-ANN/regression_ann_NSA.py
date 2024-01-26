@@ -36,7 +36,8 @@ num_outputs_params = design_vars.shape[1]
 # escale design_vars
 y_scaler = MinMaxScaler((0,1))
 y_scaled = y_scaler.fit_transform(design_vars)
-dump(y_scaler,'REGRESSION-ANN/scalers/model_'+model_name+'_scaler.gz')
+y_scaler_path = os.path.join(MYPATH,'REGRESSION-ANN/scalers/model_'+model_name+'_scaler.gz')
+dump(y_scaler,y_scaler_path)
 
 # split data into train, validation and test sets
 x_train, x_val, y_train, y_val = train_test_split(specs_columns, y_scaled, test_size=0.2, random_state=1)

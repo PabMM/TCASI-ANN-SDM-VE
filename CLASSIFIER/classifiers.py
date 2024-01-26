@@ -65,7 +65,8 @@ if(input("Perform minmax scaling? [1 for YES]")=="1"):
   scaler=MinMaxScaler()
   scaled_values=scaler.fit_transform(dataframe[Column_Names])
   dataframe[Column_Names]=scaled_values
-  dump(scaler,'CLASSIFIER/model/classifier_scaler.gz')
+  scaler_path = os.path.join(MYPATH,'CLASSIFIER/model/classifier_scaler.gz')
+  dump(scaler,scaler_path)
 print_bar()
 print(dataframe.head(5))
 print_bar()
@@ -91,7 +92,8 @@ y=pd.concat((y_train,y_test),axis=0,ignore_index=True)
 from sklearn.preprocessing import LabelEncoder
 le = LabelEncoder()
 le.fit_transform(dataframe["target"].values)
-np.save('CLASSIFIER/model/classifier_classes.npy', le.classes_,allow_pickle=True)
+classes_path = os.path.join(MYPATH,'CLASSIFIER/model/classifier_classes.npy')
+np.save(classes_path, le.classes_,allow_pickle=True)
 
 CCM = calculate_confusion_matrix(le.classes_)
 
@@ -131,7 +133,7 @@ model_eval(GNBmodel,x,y,'GNB','Whole',MYPATH)
 print_bar()
 
 # save model
-save_model(GNBmodel,'GNB','CLASSIFIER/model/')
+save_model(GNBmodel,'GNB','model/')
 
 #%% Now the logisticRegresion model
 from sklearn import linear_model
@@ -150,7 +152,7 @@ model_eval(classifier_logreg,x,y,'logreg','Whole',MYPATH)
 print_bar()
 
 # save model
-save_model(classifier_logreg,'logreg','CLASSIFIER/model/')
+save_model(classifier_logreg,'logreg','model/')
 
 #%% Now the MultinomialNB model
 from sklearn.naive_bayes import MultinomialNB
@@ -168,7 +170,7 @@ model_eval(classifier_MNB,x,y,'MNB','Whole',MYPATH)
 print_bar()
 
 # save model
-save_model(classifier_MNB,'MNB','CLASSIFIER/model/')
+save_model(classifier_MNB,'MNB','model/')
 
 #%% First the QDA model
 from sklearn.discriminant_analysis import QuadraticDiscriminantAnalysis
@@ -187,7 +189,7 @@ model_eval(classifier_QDA,x,y,'QDA','Whole',MYPATH)
 print_bar()
 
 # save model
-save_model(classifier_QDA,'QDA','CLASSIFIER/model/')
+save_model(classifier_QDA,'QDA','model/')
 
 #%% Now the Random Forest model
 from sklearn.ensemble import RandomForestClassifier
@@ -206,7 +208,7 @@ model_eval(classifier_RF,x,y,'RF','Whole',MYPATH)
 print_bar()
 
 # save model
-save_model(classifier_RF,'RF','CLASSIFIER/model/')
+save_model(classifier_RF,'RF','model/')
 
 #%% Now the LDA model
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis 
@@ -224,7 +226,7 @@ model_eval(LDAmodel,x,y,'LDA','Whole',MYPATH)
 print_bar()
 
 # save model
-save_model(LDAmodel,'LDA','CLASSIFIER/model/')
+save_model(LDAmodel,'LDA','model/')
 
 #%% ######Now decission tree
 from sklearn.tree import DecisionTreeClassifier
@@ -243,7 +245,7 @@ model_eval(DTmodel,x,y,'DT','Whole',MYPATH)
 print_bar()
 
 # save model
-save_model(DTmodel,'DT','CLASSIFIER/model/')
+save_model(DTmodel,'DT','model/')
 
 #%% ###### Now using SVM
 from sklearn import svm
@@ -266,7 +268,7 @@ for kernel in ("linear", "poly", "rbf"):
   print_bar()
 
   # save model
-  save_model(SVMModel,'SVM_'+kernel,'CLASSIFIER/model/')   
+  save_model(SVMModel,'SVM_'+kernel,'model/')   
 
 print_bar()
 
@@ -307,7 +309,7 @@ if(input("Adjust learning rate in Gradient Boosting Classifier or use default va
   print_bar()
 
   # save model
-  save_model(BestModelGB,'GB','CLASSIFIER/model/')
+  save_model(BestModelGB,'GB','model/')
 
 else:
   GBModel = GradientBoostingClassifier(n_estimators=100,learning_rate=0.52, max_features=2, max_depth=2, random_state=0)
@@ -322,7 +324,7 @@ else:
   model_eval(GBModel,x,y,'GB','Whole',MYPATH)
   print(f' Gradient Boosting Classifier accuracy on the test data: {scoresGB:.3f} execution time {ThisTime:.3f}s')    
   print_bar()
-  save_model(GBModel,'GB','CLASSIFIER/model/')
+  save_model(GBModel,'GB','model/')
 
 #%% Now using tensorflow
 import tensorflow as tf
@@ -393,4 +395,4 @@ y_pred_binary_integer_test = np.argmax(y_pred_binary_test, axis=1)
 CCM.plot_confusion_matrix(Y_test_integer_test,y_pred_binary_integer_test,'ANN','Test',MYPATH)
 CCM.plot_confusion_matrix(Y_test_integer,y_pred_binary_integer,'ANN','Total',MYPATH)
 
-save_model(model,'ANN','CLASSIFIER/model/')
+save_model(model,'ANN','model/')
